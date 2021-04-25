@@ -1,0 +1,6 @@
+pyRAPL
+sliplib
+pyserial
+protobuf
+psutil
+cputemp
