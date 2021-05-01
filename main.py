@@ -14,7 +14,8 @@ from lib_protobuf.status_pb2 import Status
 
 parser = argparse.ArgumentParser(description='Status reporter driver')
 parser.add_argument('port', help='serial port that the reporter display device is connected to')
-parser.add_argument('--period', type=float, default=1.0, help='the reporting period (default every second)')
+parser.add_argument('--period', type=float, default=1.0, help='the reporting period')
+parser.add_argument('--log-period', type=float, default=1.0, help='the device log readback period')
 args = parser.parse_args()
 
 print('Start status monitor')
@@ -52,7 +53,7 @@ async def status_main():
 
 async def main():
     status_main_task = status_main()
-    read_main_task = driver.read_main(lambda: stop)
+    read_main_task = driver.read_main(args.log_period, lambda: stop)
     await asyncio.gather(read_main_task, status_main_task)
 
 

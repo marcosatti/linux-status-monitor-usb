@@ -21,7 +21,7 @@ def write_status(status):
     port.flush()
 
 
-async def read_main(stop_cb):
+async def read_main(period, stop_cb):
     time_instant = time.time()
 
     while not stop_cb():
@@ -31,7 +31,7 @@ async def read_main(stop_cb):
             message = message.decode('utf-8')
             duration = time.time() - time_instant
             print(f'[{duration:.3f}] ' + message, end='')
-        await asyncio.sleep(0.1)
+        await asyncio.sleep(period)
 
 
 def exit():
